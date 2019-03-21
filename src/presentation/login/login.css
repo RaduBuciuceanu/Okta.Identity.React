@@ -1,0 +1,9 @@
+.login-field {
+    width: 20%;
+}
+
+@media screen and (max-width: 1000px) {
+    .login-field {
+        width: 40%;
+    }
+}

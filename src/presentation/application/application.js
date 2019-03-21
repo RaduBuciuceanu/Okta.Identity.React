@@ -1,33 +1,29 @@
-// src/App.js
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import Home from "../home/home";
+import Register from "../register/register";
+import Login from "../login/login";
+import NotFound from "../not-found/not-found";
 
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-import Home from './home';
-import Login from './login';
-import Protected from './protected';
+export default class Application extends Component {
+    #issuer = 'https://dev-896128.okta.com/oauth2/default';
+    #clientId = '0oadijnbocsI5cyAd356';
+    #redirectUrl = `${window.location.origin}/implicit/callback`;
+    #loginUrl = 'https://dev-896128.okta.com';
 
-function onAuthRequired({history}) {
-    history.push('/login');
-}
-
-class App extends Component {
     render() {
         return (
             <Router>
-                <Security issuer='https://dev-896128.okta.com/oauth2/default'
-                          client_id={'0oadijnbocsI5cyAd356'}
-                          redirect_uri={window.location.origin + '/implicit/callback'}
-                          onAuthRequired={onAuthRequired} >
+                <Switch>
+                    <Route path="/home" component={Home}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/register" component={Register}/>
+                    <Route path="/404" component={NotFound}/>
 
-                    <Route path='/' exact={true} component={Home} />
-                    <SecureRoute path='/protected' component={Protected} />
-                    <Route path='/login' render={() => <Login baseUrl='https://dev-896128.okta.com' />} />
-                    <Route path='/implicit/callback' component={ImplicitCallback} />
-                </Security>
+                    <Redirect from="/" exact to="/home"/>
+                    <Redirect to="/404"/>
+                </Switch>
             </Router>
         );
     }
 }
-
-export default App;
