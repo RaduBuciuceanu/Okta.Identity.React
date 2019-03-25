@@ -4,16 +4,14 @@ import Home from "../home/home";
 import Register from "../register/register";
 import Login from "../login/login";
 import NotFound from "../not-found/not-found";
+import Notification from "../notification/notification";
 
 export default class Application extends Component {
-    #issuer = 'https://dev-896128.okta.com/oauth2/default';
-    #clientId = '0oadijnbocsI5cyAd356';
-    #redirectUrl = `${window.location.origin}/implicit/callback`;
-    #loginUrl = 'https://dev-896128.okta.com';
-
     render() {
         return (
             <Router>
+                <Notification/>
+
                 <Switch>
                     <Route path="/home" component={Home}/>
                     <Route path="/login" component={Login}/>
