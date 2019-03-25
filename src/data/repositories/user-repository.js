@@ -27,7 +27,7 @@ class UserRepository {
     }
 
     logout() {
-        return of(undefined).pipe(tap((value) => document.cookie = value));
+        return of(undefined).pipe(tap((value) => document.cookie = ''));
     }
 }
 

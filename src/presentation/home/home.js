@@ -5,6 +5,7 @@ import {Grid} from "@material-ui/core";
 import {userRepository} from "../../data/repositories/user-repository";
 import {tap} from "rxjs/operators";
 import Logout from "../../business/commands/logout";
+import User from "../user/user";
 
 export default class Home extends Component {
     #logoutCommand = new Logout();
@@ -25,6 +26,7 @@ export default class Home extends Component {
         return (
             <Grid container spacing={16} alignItems={'center'} justify={'center'} direction={"column"}>
                 {this.#renderHelloMessage()}
+                {this.#renderUser()}
                 <Grid className="home-field" item>
                     {this.#renderLoginButton()}
                     {this.#renderLogoutButton()}
@@ -69,5 +71,21 @@ export default class Home extends Component {
         }
 
         return null;
+    };
+
+    #renderUser = () => {
+        if (this.state.authCookies) {
+            return (
+                <Grid className="home-field">
+                    <Button fullWidth onClick={this.#user}>User</Button>
+                </Grid>
+            )
+        }
+
+        return null;
+    };
+
+    #user = () => {
+        this.props.history.push('/user');
     }
 }
