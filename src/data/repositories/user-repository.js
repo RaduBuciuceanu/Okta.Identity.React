@@ -1,8 +1,8 @@
 import OktaAuth from '@okta/okta-auth-js'
-import {from} from 'rxjs';
+import {from, of} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
-export default class UserRepository {
+class UserRepository {
     #oktaConfigurtion = {
         issuer: 'https://dev-896128.okta.com/oauth2/default',
         clientId: '0oadijnbocsI5cyAd356',
@@ -15,6 +15,16 @@ export default class UserRepository {
 
     login(credentials) {
         return from(this.#okta.signIn(credentials))
-            .pipe(tap((response) => console.log(response)));
+            .pipe(tap((response) => document.cookie = JSON.stringify(response)));
+    }
+
+    getLoggedUser() {
+        if (document.cookie) {
+            return of(JSON.parse(document.cookie));
+        }
+
+        return of(undefined);
     }
 }
+
+export const userRepository = new UserRepository();

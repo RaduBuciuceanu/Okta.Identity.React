@@ -3,7 +3,7 @@ import {Button, TextField, Grid} from "@material-ui/core";
 import './login.css';
 import LoginCommand from '../../business/commands/login';
 import {notify} from "../../business/commands/notify";
-import {tap} from "rxjs/operators";
+import {delay, tap} from "rxjs/operators";
 
 export default class Login extends Component {
     #loginCommand = new LoginCommand();
@@ -34,7 +34,9 @@ export default class Login extends Component {
 
     #login = () => {
         this.#loginCommand.execute(this.#buildCredentials())
-            .pipe(tap(() => notify.execute('Done.')))
+            .pipe(tap((user) => notify.execute(`Login succeeded. Wellcome ${user.user.profile.firstName}.`)))
+            .pipe(delay(1000))
+            .pipe(tap(() => this.props.history.push('/home')))
             .subscribe();
     };
 
