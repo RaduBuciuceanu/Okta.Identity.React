@@ -4,8 +4,11 @@ import './home.css'
 import {Grid} from "@material-ui/core";
 import {userRepository} from "../../data/repositories/user-repository";
 import {tap} from "rxjs/operators";
+import Logout from "../../business/commands/logout";
 
 export default class Home extends Component {
+    #logoutCommand = new Logout();
+
     constructor(props) {
         super(props);
 
@@ -51,7 +54,9 @@ export default class Home extends Component {
     };
 
     #logout = () => {
-        this.props.history.push('/register');
+        this.#logoutCommand.execute()
+            .pipe(tap(() => this.props.history.push('/login')))
+            .subscribe();
     };
 
     #renderHelloMessage = () => {

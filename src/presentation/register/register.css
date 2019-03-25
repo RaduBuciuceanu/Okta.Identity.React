@@ -1,9 +1,0 @@
-.register-field {
-    width: 20%;
-}
-
-@media screen and (max-width: 1000px) {
-    .register-field {
-        width: 40%;
-    }
-}

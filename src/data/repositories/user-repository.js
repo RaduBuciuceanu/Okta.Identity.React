@@ -25,6 +25,10 @@ class UserRepository {
 
         return of(undefined);
     }
+
+    logout() {
+        return of(undefined).pipe(tap((value) => document.cookie = value));
+    }
 }
 
 export const userRepository = new UserRepository();
